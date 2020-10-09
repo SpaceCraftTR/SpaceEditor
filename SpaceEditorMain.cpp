@@ -108,6 +108,17 @@ SpaceEditorFrame::SpaceEditorFrame(wxWindow* parent,wxWindowID id)
 
 
 }
+void SpaceEditorFrame::SaveAFile(wxString& filePath){
+
+
+        wxFile file;
+        file.Create(filePath,true);
+        std::ofstream output(filePath); //clear function on textfile also doesn't work :/
+        file.Write(RichTextCtrl1->GetValue());
+
+
+
+}
 void SpaceEditorFrame::OnSaveClicked(wxCommandEvent& event)
 {
     saveCounter++;
@@ -132,10 +143,8 @@ void SpaceEditorFrame::OnSaveClicked(wxCommandEvent& event)
 
 
         savePath = FileDialog2->GetPath();
-        wxFile file(savePath,wxFile::read_write);
-        std::ofstream output(savePath); //clear function on textfile also doesn't work :/
-        file.Write(RichTextCtrl1->GetValue());
-
+        fileName = FileDialog2->GetFilename();
+        SaveAFile(savePath);
 
 
 
@@ -146,9 +155,7 @@ void SpaceEditorFrame::OnSaveClicked(wxCommandEvent& event)
     if(saveCounter > 1){
 
 
-        wxFile file(savePath,wxFile::read_write);
-        std::ofstream output(savePath);
-        file.Write(RichTextCtrl1->GetValue());
+        SaveAFile(savePath);
 
     }
 }
@@ -156,11 +163,10 @@ void SpaceEditorFrame::OnSaveAsClicked(wxCommandEvent& event)
 {
 
     int state = FileDialog3->ShowModal();
+    wxString address;
     if(state == wxID_OK){
-
-        wxFile file(FileDialog3->GetPath(),wxFile::read_write);
-        std::ofstream output(FileDialog3->GetPath());
-        file.Write(RichTextCtrl1->GetValue());
+        address = FileDialog3->GetPath();
+        SaveAFile(address);
 
 
     }
@@ -170,13 +176,14 @@ void SpaceEditorFrame::OnSaveAsClicked(wxCommandEvent& event)
 
 void SpaceEditorFrame::OnOpenClicked(wxCommandEvent& event)
 {
+    saveCounter = 0;
     wxString text;
     int handler = FileDialog1->ShowModal();
     if(handler == wxID_OK){
             SetTitle(FileDialog1->GetFilename() + " - SpaceCraft SpaceEditor");
         wxTextFile editfile;
         editfile.Open(FileDialog1->GetPath());
-        for(int i = 0; i < editfile.GetLineCount(); i++){
+        for(size_t i = 0; i < editfile.GetLineCount(); i++){
 
 
             text<<editfile.GetLine(i)<<"\r\n";
@@ -202,7 +209,7 @@ void SpaceEditorFrame::OnAbout(wxCommandEvent& event)
 {
        wxAboutDialogInfo aboutInfo;
     aboutInfo.SetName("SpaceCraft SpaceEditor");
-    aboutInfo.SetVersion("Beta 0.1");
+    aboutInfo.SetVersion("Beta 0.2");
     aboutInfo.SetDescription(_("All the content that makes SpaceEditor is written by contributors and it will be open-source forever. Say thanks to all the contributors!"));
     aboutInfo.SetWebSite("http://github.com/SpaceCraftTR");
     wxAboutBox(aboutInfo);
