@@ -35,6 +35,8 @@ class SpaceEditorFrame: public wxFrame
         void OnSaveAsClicked(wxCommandEvent& event);
         void OnOpenClicked(wxCommandEvent& event);
 
+        /*Save file function*/
+        void SaveAFile(wxString &filePath);
 
         static const long ID_RICHTEXTCTRL1;
         static const long ID_MENUITEM1;
@@ -55,6 +57,7 @@ class SpaceEditorFrame: public wxFrame
 
        unsigned int saveCounter = 0; //I know it doesn't look really good, but I don't know any better way for this. You'll see what is this for in the main code.
         wxString savePath;
+        wxString fileName;
         DECLARE_EVENT_TABLE()
 };
 
