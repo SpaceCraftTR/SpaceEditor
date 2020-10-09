@@ -18,6 +18,6 @@ A lightweight editor that only occupies kilobytes from your storage media.
 - Port to macOS and Windows.
 - Add font color buttons and paragraph alignment button.
 
-# IMPORTANT BUILD WARNING
+### IMPORTANT BUILD WARNING
 
 When you first open the Code::Blocks project file, rebuild the projects. Otherwise, the program won't compile and terminate with error code -1.
