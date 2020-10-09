@@ -11,3 +11,6 @@ A lightweight editor that only occupies kilobytes from your storage media.
 - Under Code::Blocks' compiler settings, click "Linker settings" tab, and add the following library;
 "libwx_gtk3u_richtext-3.0.so" 
 (The name of the library is depending on the operating system you have. This name is valid under Linux. I don't know what is its name under the Microsoft Windows and macOS. So, select the rich text library from your libraries folder and link it to GCC.)
+
+#### IMPORTANT BUILDING WARNING
+When you first open the .cbp (Code::Blocks project file) file, rebuild the project to get SpaceEditor up and running. Otherwise, the program will terminate with -1 error code.
