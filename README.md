@@ -12,5 +12,12 @@ A lightweight editor that only occupies kilobytes from your storage media.
 "libwx_gtk3u_richtext-3.0.so" 
 (The name of the library is depending on the operating system you have. This name is valid under Linux. I don't know what is its name under the Microsoft Windows and macOS. So, select the rich text library from your libraries folder and link it to GCC.)
 
-#### IMPORTANT BUILDING WARNING
-When you first open the .cbp (Code::Blocks project file) file, rebuild the project to get SpaceEditor up and running. Otherwise, the program will terminate with -1 error code.
+
+
+#### To-do list:
+- Port to macOS and Windows.
+- Add font color buttons and paragraph alignment button.
+
+# IMPORTANT BUILD WARNING
+
+When you first open the Code::Blocks project file, rebuild the projects. Otherwise, the program won't compile and terminate with error code -1.
