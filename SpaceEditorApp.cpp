@@ -9,10 +9,7 @@
 
 #include "SpaceEditorApp.h"
 
-//(*AppHeaders
-#include "SpaceEditorMain.h"
-#include <wx/image.h>
-//*)
+
 
 IMPLEMENT_APP(SpaceEditorApp);
 
@@ -23,9 +20,23 @@ bool SpaceEditorApp::OnInit()
     wxInitAllImageHandlers();
     if ( wxsOK )
     {
-    	SpaceEditorFrame* Frame = new SpaceEditorFrame(0);
-    	Frame->Show();
+
+
+    	if(wxApp::argc > 1){
+
+        Frame = new SpaceEditorFrame(NULL,wxApp::argv[1],-1);
+        Frame->Show();
     	SetTopWindow(Frame);
+
+
+    	}
+    	else{
+
+            Frame = new SpaceEditorFrame(nullptr,-1);
+            Frame->Show();
+            SetTopWindow(Frame);
+
+    	}
     }
     //*)
     return wxsOK;

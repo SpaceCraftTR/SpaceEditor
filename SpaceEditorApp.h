@@ -9,13 +9,16 @@
 
 #ifndef SPACEEDITORAPP_H
 #define SPACEEDITORAPP_H
-
+#include "SpaceEditorMain.h"
+#include <wx/image.h>
 #include <wx/app.h>
 
 class SpaceEditorApp : public wxApp
 {
     public:
         virtual bool OnInit();
+        SpaceEditorFrame* Frame;
+
 };
 
 #endif // SPACEEDITORAPP_H

@@ -10,7 +10,7 @@
 #include "SpaceEditorMain.h"
 #include <wx/msgdlg.h>
 #include <wx/aboutdlg.h>
-#include <wx/textfile.h>
+
 #include <wx/file.h>
 #include <fstream>
 //(*InternalHeaders(SpaceEditorFrame)
@@ -68,8 +68,8 @@ SpaceEditorFrame::SpaceEditorFrame(wxWindow* parent,wxWindowID id)
     wxMenuBar* MenuBar1;
     wxMenuItem* MenuItem1;
     wxMenuItem* MenuItem2;
-
     Create(parent, id, _("SpaceCraft SpaceEditor"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("id"));
+
     RichTextCtrl1 = new wxRichTextCtrl(this, ID_RICHTEXTCTRL1, wxEmptyString, wxPoint(160,280), wxDefaultSize, wxRE_MULTILINE, wxDefaultValidator, _T("ID_RICHTEXTCTRL1"));
     wxRichTextAttr rchtxtAttr_1;
     rchtxtAttr_1.SetBulletStyle(wxTEXT_ATTR_BULLET_STYLE_ALIGN_LEFT);
@@ -105,6 +105,57 @@ SpaceEditorFrame::SpaceEditorFrame(wxWindow* parent,wxWindowID id)
     Connect(ID_MENUITEM1,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SpaceEditorFrame::OnSaveClicked);
     Connect(ID_MENUITEM2,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SpaceEditorFrame::OnSaveAsClicked);
     Connect(ID_MENUITEM3,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SpaceEditorFrame::OnOpenClicked);
+
+
+
+
+}
+SpaceEditorFrame::SpaceEditorFrame(wxWindow* parent, wxString arguments, wxWindowID id){
+
+    wxMenu* Menu1;
+    wxMenu* Menu2;
+    wxMenuBar* MenuBar1;
+    wxMenuItem* MenuItem1;
+    wxMenuItem* MenuItem2;
+    Create(parent, id, _("SpaceCraft SpaceEditor"), wxDefaultPosition, wxSize(640,480), wxDEFAULT_FRAME_STYLE, _T("id"));
+
+    RichTextCtrl1 = new wxRichTextCtrl(this, ID_RICHTEXTCTRL1, wxEmptyString, wxPoint(160,280), wxDefaultSize, wxRE_MULTILINE, wxDefaultValidator, _T("ID_RICHTEXTCTRL1"));
+    wxRichTextAttr rchtxtAttr_1;
+    rchtxtAttr_1.SetBulletStyle(wxTEXT_ATTR_BULLET_STYLE_ALIGN_LEFT);
+    MenuBar1 = new wxMenuBar();
+    Menu1 = new wxMenu();
+    MenuItem3 = new wxMenuItem(Menu1, ID_MENUITEM1, _("Save\tCtrl-S"), _("Save current file."), wxITEM_NORMAL);
+    Menu1->Append(MenuItem3);
+    MenuItem4 = new wxMenuItem(Menu1, ID_MENUITEM2, _("Save As\tCtrl-Shift-S"), _("Save current file as..."), wxITEM_NORMAL);
+    Menu1->Append(MenuItem4);
+    MenuItem5 = new wxMenuItem(Menu1, ID_MENUITEM3, _("Open\tCtrl-O"), _("Open a file."), wxITEM_NORMAL);
+    Menu1->Append(MenuItem5);
+    MenuItem1 = new wxMenuItem(Menu1, idMenuQuit, _("Quit\tAlt-F4"), _("Quit the application"), wxITEM_NORMAL);
+    Menu1->Append(MenuItem1);
+    MenuBar1->Append(Menu1, _("&File"));
+    Menu2 = new wxMenu();
+    MenuItem2 = new wxMenuItem(Menu2, idMenuAbout, _("About\tF1"), _("Show info about this application"), wxITEM_NORMAL);
+    Menu2->Append(MenuItem2);
+    MenuBar1->Append(Menu2, _("Help"));
+    SetMenuBar(MenuBar1);
+    StatusBar1 = new wxStatusBar(this, ID_STATUSBAR1, 0, _T("ID_STATUSBAR1"));
+    FileDialog1 = new wxFileDialog(this,"Open a file...");
+    FileDialog2 = new wxFileDialog(this, _("Save file..."), "", "","", wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+    FileDialog3 = new wxFileDialog(this, _("Save the file as..."), "", "","", wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+    int __wxStatusBarWidths_1[1] = { -1 };
+    int __wxStatusBarStyles_1[1] = { wxSB_NORMAL };
+    StatusBar1->SetFieldsCount(1,__wxStatusBarWidths_1);
+    StatusBar1->SetStatusStyles(1,__wxStatusBarStyles_1);
+    SetStatusBar(StatusBar1);
+
+
+    Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SpaceEditorFrame::OnQuit);
+    Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SpaceEditorFrame::OnAbout);
+    Connect(ID_MENUITEM1,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SpaceEditorFrame::OnSaveClicked);
+    Connect(ID_MENUITEM2,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SpaceEditorFrame::OnSaveAsClicked);
+    Connect(ID_MENUITEM3,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&SpaceEditorFrame::OnOpenClicked);
+
+OpenFile(arguments);
 
 
 }
@@ -176,24 +227,7 @@ void SpaceEditorFrame::OnSaveAsClicked(wxCommandEvent& event)
 
 void SpaceEditorFrame::OnOpenClicked(wxCommandEvent& event)
 {
-    saveCounter = 0;
-    wxString text;
-    int handler = FileDialog1->ShowModal();
-    if(handler == wxID_OK){
-            SetTitle(FileDialog1->GetFilename() + " - SpaceCraft SpaceEditor");
-        wxTextFile editfile;
-        editfile.Open(FileDialog1->GetPath());
-        for(size_t i = 0; i < editfile.GetLineCount(); i++){
-
-
-            text<<editfile.GetLine(i)<<"\r\n";
-
-
-        }
-
-        RichTextCtrl1->SetValue(text);
-
-    }
+    OpenFile();
 }
 
 SpaceEditorFrame::~SpaceEditorFrame()
@@ -209,8 +243,8 @@ void SpaceEditorFrame::OnAbout(wxCommandEvent& event)
 {
        wxAboutDialogInfo aboutInfo;
     aboutInfo.SetName("SpaceCraft SpaceEditor");
-    aboutInfo.SetVersion("Beta 0.2");
-    aboutInfo.SetDescription(_("All the content that makes SpaceEditor is written by contributors and it will be open-source forever. Say thanks to all the contributors!"));
+    aboutInfo.SetVersion("Release 1.0 for Linux");
+    aboutInfo.SetDescription(_("All the content that makes SpaceEditor is written by volunteers and it will be open-source forever. Salute to everyone who has effort on SpaceEditor!"));
     aboutInfo.SetWebSite("http://github.com/SpaceCraftTR");
     wxAboutBox(aboutInfo);
 }

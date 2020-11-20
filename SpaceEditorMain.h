@@ -11,6 +11,7 @@
 #define SPACEEDITORMAIN_H
 
 
+#include <wx/textfile.h>
 #include <wx/frame.h>
 #include <wx/menu.h>
 #include <wx/richtext/richtextctrl.h>
@@ -23,7 +24,55 @@ class SpaceEditorFrame: public wxFrame
     public:
 
         SpaceEditorFrame(wxWindow* parent,wxWindowID id = -1);
+        SpaceEditorFrame(wxWindow* parent, wxString arguments, wxWindowID id = -1);
         virtual ~SpaceEditorFrame();
+
+
+        void OpenFile(){
+
+    saveCounter = 0;
+    wxString text;
+    int handler = FileDialog1->ShowModal();
+    if(handler == wxID_OK){
+            SetTitle(FileDialog1->GetFilename() + " - SpaceCraft SpaceEditor");
+        wxTextFile editfile;
+        editfile.Open(FileDialog1->GetPath());
+        for(size_t i = 0; i < editfile.GetLineCount(); i++){
+
+
+            text<<editfile.GetLine(i)<<"\r\n";
+
+
+        }
+
+        RichTextCtrl1->SetValue(text);
+
+    }
+
+}
+void OpenFile(wxString path){
+
+saveCounter = 0;
+    wxString text;
+            SetTitle(path + " - SpaceCraft SpaceEditor");
+        wxTextFile editfile;
+        editfile.Open(path);
+        for(size_t i = 0; i < editfile.GetLineCount(); i++){
+
+
+            text<<editfile.GetLine(i)<<"\r\n";
+
+
+        }
+
+        RichTextCtrl1->SetValue(text);
+
+
+
+
+}
+
+
 
     private:
 
