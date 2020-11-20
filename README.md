@@ -20,4 +20,4 @@ A lightweight editor that only occupies kilobytes from your storage media.
 
 ### IMPORTANT BUILD WARNING
 
-When you first open the Code::Blocks project file, rebuild the projects. Otherwise, the program won't compile and terminate with error code -1.
+When you first open the Code::Blocks project file, rebuild the projects. Otherwise, the program won't compile and GCC will terminate with returning -1.
