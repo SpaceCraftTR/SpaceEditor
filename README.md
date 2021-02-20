@@ -1,7 +1,7 @@
 # SpaceEditor
 A lightweight text editor.
 
-SpaceEditor is plaintext editor, for now.
+SpaceEditor is a plaintext editor, for now.
 
 ### How to build?
 
