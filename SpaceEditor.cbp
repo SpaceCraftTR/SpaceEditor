@@ -31,11 +31,12 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="`wx-config --cflags`" />
 			<Add option="-Wall" />
+			<Add option='`wx-config --version=3.1 --static=yes` -I&quot;/usr/local/lib/wx/include/gtk3-unicode-static-3.1&quot; -I&quot;/usr/local/include/wx-3.1&quot; -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -pthread' />
 		</Compiler>
 		<Linker>
-			<Add option="`wx-config --libs`" />
+			<Add option='`wx-config --version=3.1 --static=yes` -L&quot;/usr/local/lib&quot; -pthread   /usr/local/lib/libwx_gtk3u-3.1.a -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -lharfbuzz -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lgthread-2.0 -pthread -lglib-2.0 -lX11 -lXxf86vm -lSM -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -lharfbuzz -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lnotify -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lXtst -lpangoft2-1.0 -lpango-1.0 -lgobject-2.0 -lglib-2.0 -lharfbuzz -lfontconfig -lfreetype -lpng -lz -lwxtiff-3.1 -lwxjpeg-3.1 -lwxregexu-3.1 -lwxscintilla-3.1 -lz -lexpat -lpng -lz -lz -ldl -lm' />
+			<Add library="../../../../../../../lib/x86_64-linux-gnu/libwx_gtk3u_richtext-3.1.a" />
 		</Linker>
 		<Unit filename="SpaceEditorApp.cpp" />
 		<Unit filename="SpaceEditorApp.h" />

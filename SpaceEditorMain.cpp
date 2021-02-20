@@ -71,8 +71,6 @@ SpaceEditorFrame::SpaceEditorFrame(wxWindow* parent,wxWindowID id)
     Create(parent, id, _("SpaceCraft SpaceEditor"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("id"));
 
     RichTextCtrl1 = new wxRichTextCtrl(this, ID_RICHTEXTCTRL1, wxEmptyString, wxPoint(160,280), wxDefaultSize, wxRE_MULTILINE, wxDefaultValidator, _T("ID_RICHTEXTCTRL1"));
-    wxRichTextAttr rchtxtAttr_1;
-    rchtxtAttr_1.SetBulletStyle(wxTEXT_ATTR_BULLET_STYLE_ALIGN_LEFT);
     MenuBar1 = new wxMenuBar();
     Menu1 = new wxMenu();
     MenuItem3 = new wxMenuItem(Menu1, ID_MENUITEM1, _("Save\tCtrl-S"), _("Save current file."), wxITEM_NORMAL);
@@ -112,6 +110,7 @@ SpaceEditorFrame::SpaceEditorFrame(wxWindow* parent,wxWindowID id)
 }
 SpaceEditorFrame::SpaceEditorFrame(wxWindow* parent, wxString arguments, wxWindowID id){
 
+    argv_ = arguments;
     wxMenu* Menu1;
     wxMenu* Menu2;
     wxMenuBar* MenuBar1;
@@ -172,42 +171,11 @@ void SpaceEditorFrame::SaveAFile(wxString& filePath){
 }
 void SpaceEditorFrame::OnSaveClicked(wxCommandEvent& event)
 {
-    saveCounter++;
-
-    if(saveCounter == 1){
-
-
-        int handler = FileDialog2->ShowModal();
-        if(handler == wxID_CANCEL){
-
-        if(saveCounter != 0){
-
-                saveCounter--;
-
-        }
-
-
-        }
-
-        else if(handler == wxID_OK){
-
-
-
-        savePath = FileDialog2->GetPath();
-        fileName = FileDialog2->GetFilename();
-        SaveAFile(savePath);
-
-
-
-        }
-
-
+    if(argv_ != wxEmptyString){
+    SaveAFile(argv_);
     }
-    if(saveCounter > 1){
-
-
-        SaveAFile(savePath);
-
+    else{
+    OnSaveAsClicked(event);
     }
 }
 void SpaceEditorFrame::OnSaveAsClicked(wxCommandEvent& event)
@@ -217,6 +185,7 @@ void SpaceEditorFrame::OnSaveAsClicked(wxCommandEvent& event)
     wxString address;
     if(state == wxID_OK){
         address = FileDialog3->GetPath();
+        argv_ = address;
         SaveAFile(address);
 
 
@@ -243,7 +212,7 @@ void SpaceEditorFrame::OnAbout(wxCommandEvent& event)
 {
        wxAboutDialogInfo aboutInfo;
     aboutInfo.SetName("SpaceCraft SpaceEditor");
-    aboutInfo.SetVersion("Release 1.0 for Linux");
+    aboutInfo.SetVersion("Release 1.1 for Linux");
     aboutInfo.SetDescription(_("All the content that makes SpaceEditor is written by volunteers and it will be open-source forever. Salute to everyone who has effort on SpaceEditor!"));
     aboutInfo.SetWebSite("http://github.com/SpaceCraftTR");
     wxAboutBox(aboutInfo);

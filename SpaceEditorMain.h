@@ -15,7 +15,6 @@
 #include <wx/frame.h>
 #include <wx/menu.h>
 #include <wx/richtext/richtextctrl.h>
-#include <wx/statusbr.h>
 #include <wx/file.h>
 #include <wx/filedlg.h>
 
@@ -28,48 +27,35 @@ class SpaceEditorFrame: public wxFrame
         virtual ~SpaceEditorFrame();
 
 
-        void OpenFile(){
+inline void OpenFile(){
 
-    saveCounter = 0;
     wxString text;
     int handler = FileDialog1->ShowModal();
     if(handler == wxID_OK){
-            SetTitle(FileDialog1->GetFilename() + " - SpaceCraft SpaceEditor");
+        SetTitle(FileDialog1->GetFilename() + " - SpaceCraft SpaceEditor");
         wxTextFile editfile;
+        argv_ = FileDialog1->GetPath();
         editfile.Open(FileDialog1->GetPath());
         for(size_t i = 0; i < editfile.GetLineCount(); i++){
 
-
             text<<editfile.GetLine(i)<<"\r\n";
 
-
         }
-
         RichTextCtrl1->SetValue(text);
-
     }
-
 }
-void OpenFile(wxString path){
-
-saveCounter = 0;
-    wxString text;
-            SetTitle(path + " - SpaceCraft SpaceEditor");
+inline void OpenFile(wxString path){
+        wxString text;
+        SetTitle(path + " - SpaceCraft SpaceEditor");
         wxTextFile editfile;
+        argv_ = path;
         editfile.Open(path);
         for(size_t i = 0; i < editfile.GetLineCount(); i++){
 
-
             text<<editfile.GetLine(i)<<"\r\n";
 
-
         }
-
         RichTextCtrl1->SetValue(text);
-
-
-
-
 }
 
 
@@ -104,9 +90,10 @@ saveCounter = 0;
         wxFileDialog* FileDialog2;
         wxFileDialog* FileDialog3;
 
-       unsigned int saveCounter = 0; //I know it doesn't look really good, but I don't know any better way for this. You'll see what is this for in the main code.
+
         wxString savePath;
         wxString fileName;
+        wxString argv_;
         DECLARE_EVENT_TABLE()
 };
 
